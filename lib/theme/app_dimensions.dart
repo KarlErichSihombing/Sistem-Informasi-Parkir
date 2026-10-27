@@ -1,19 +1,35 @@
-
 import 'package:flutter/material.dart';
+import 'app_colors.dart';
 
 class AppDimensions {
-  // Corner rounding
-  static const double radiusSmall = 4;
-  static const double radius = 8;
-  static const double radiusLarge = 16;
+  AppDimensions._();
 
-  // Space system: 8px base grid
-  static const double space1 = 8;
-  static const double space2 = 16;
-  static const double space3 = 24;
-  static const double space4 = 32;
-  static const double space5 = 40;
+  // Spacing
+  static const double xs = 4;
+  static const double sm = 8;
+  static const double md = 12;
+  static const double lg = 16;
+  static const double xl = 20;
+  static const double xxl = 28;
+  static const double huge = 40;
 
-  // Padding halaman
-  static const double pagePadding = 24;
+  static const double pagePadding = 20;
+
+  // Radius
+  static const double radiusSm = 10;
+  static const double radiusMd = 14;
+  static const double radiusLg = 18;
+  static const double radiusXl = 24;
+
+  // Tinggi komponen
+  static const double buttonHeight = 54;
+
+  // Bayangan lembut untuk kartu
+  static const List<BoxShadow> softShadow = [
+    BoxShadow(
+      color: AppColors.shadow,
+      blurRadius: 18,
+      offset: Offset(0, 6),
+    ),
+  ];
 }

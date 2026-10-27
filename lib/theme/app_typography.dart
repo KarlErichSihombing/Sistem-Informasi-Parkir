@@ -1,40 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'app_colors.dart';
 
 class AppTypography {
-  //Heading 1
-  static TextStyle heading1 = GoogleFonts.inter(
-    fontSize: 32,
-    fontWeight: FontWeight.bold,
+  AppTypography._();
+
+  static const TextStyle display = TextStyle(
+    fontSize: 28,
+    fontWeight: FontWeight.w800,
+    height: 1.2,
+    letterSpacing: -0.5,
+    color: AppColors.ink,
   );
-  
-  //Heading 2
-  static TextStyle heading2 = GoogleFonts.inter(
+
+  static const TextStyle title = TextStyle(
     fontSize: 18,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w800,
+    color: AppColors.ink,
   );
 
-  //Body Nromal
-  static TextStyle body = GoogleFonts.inter(
+  static const TextStyle subtitle = TextStyle(
     fontSize: 15,
-    fontWeight: FontWeight.normal,
+    fontWeight: FontWeight.w800,
+    color: AppColors.ink,
   );
 
-  //Body Bold
-  static TextStyle bodyBold = GoogleFonts.inter(
-    fontSize: 15,
-    fontWeight: FontWeight.bold,
+  static const TextStyle body = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    height: 1.4,
+    color: AppColors.ink,
   );
 
-  //Caption
-  static TextStyle caption = GoogleFonts.dmSans(
+  static const TextStyle bodyMuted = TextStyle(
+    fontSize: 14,
+    height: 1.5,
+    color: AppColors.muted,
+  );
+
+  static const TextStyle caption = TextStyle(
+    fontSize: 12,
+    height: 1.3,
+    color: AppColors.muted,
+  );
+
+  static const TextStyle label = TextStyle(
     fontSize: 13,
-    fontWeight: FontWeight.normal,
+    fontWeight: FontWeight.w700,
+    color: AppColors.ink,
   );
 
-  //Label
-  static TextStyle label = GoogleFonts.dmSans(
-    fontSize: 11,
-    fontWeight: FontWeight.bold,
+  static const TextStyle button = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w700,
+    color: Colors.white,
   );
 }

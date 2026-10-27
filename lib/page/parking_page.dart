@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
+import '../theme/app_dimensions.dart';
+import '../theme/app_typography.dart';
+import '../widgets/auth_background.dart';
 
 /// Konfigurasi denah satu bagian area parkir.
 class _SectionLayout {
@@ -78,232 +82,174 @@ class ParkingPage extends StatefulWidget {
 }
 
 class _ParkingPageState extends State<ParkingPage> {
-  static const Color _primary = Color(0xFF5142FF);
-  static const Color _ink = Color(0xFF19172E);
-  static const Color _muted = Color(0xFF8A87A6);
-  static const Color _bg = Color(0xFFF7F6FF);
-
   int _selected = 0;
 
   @override
   Widget build(BuildContext context) {
     final section = _sections[_selected];
 
-    return Scaffold(
-      backgroundColor: _bg,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Tombol kembali
-              InkWell(
-                onTap: () => Navigator.pop(context),
-                borderRadius: BorderRadius.circular(20),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 6),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 38,
-                        height: 38,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          boxShadow: _softShadow,
-                        ),
-                        child: const Icon(
-                          Icons.arrow_back_rounded,
-                          size: 20,
-                          color: _ink,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      const Text(
-                        'Kembali',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          color: _ink,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              // Judul
-              Text.rich(
-                TextSpan(
-                  style: const TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w800,
-                    height: 1.2,
-                    letterSpacing: -0.5,
-                    color: _ink,
-                  ),
+    return AuthBackground(
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Tombol kembali
+            InkWell(
+              onTap: () => Navigator.pop(context),
+              borderRadius: BorderRadius.circular(20),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    const TextSpan(text: 'Denah Area Parkir\n'),
-                    TextSpan(
-                      text: widget.areaName,
-                      style: const TextStyle(color: _primary),
+                    Container(
+                      width: 38,
+                      height: 38,
+                      decoration: BoxDecoration(
+                        color: AppColors.surface,
+                        shape: BoxShape.circle,
+                        boxShadow: AppDimensions.softShadow,
+                      ),
+                      child: const Icon(
+                        Icons.arrow_back_rounded,
+                        size: 20,
+                        color: AppColors.ink,
+                      ),
                     ),
+                    const SizedBox(width: 10),
+                    const Text('Kembali', style: AppTypography.label),
                   ],
                 ),
               ),
+            ),
 
-              const SizedBox(height: 22),
+            const SizedBox(height: 20),
 
-              // Dropdown pilih bagian
-              const Text(
-                'Pilih bagian',
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w700,
-                  color: _ink,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: _softShadow,
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<int>(
-                    value: _selected,
-                    isExpanded: true,
-                    borderRadius: BorderRadius.circular(16),
-                    dropdownColor: Colors.white,
-                    icon: const Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: _primary,
-                    ),
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: _ink,
-                    ),
-                    items: [
-                      for (var i = 0; i < _sections.length; i++)
-                        DropdownMenuItem(
-                          value: i,
-                          child: Text(_sections[i].name),
-                        ),
-                    ],
-                    onChanged: (v) {
-                      if (v != null) setState(() => _selected = v);
-                    },
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 16),
-
-              // Ringkasan ketersediaan
-              Row(
+            // Judul
+            Text.rich(
+              TextSpan(
+                style: AppTypography.display,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0x1F5142FF),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.local_parking_rounded,
-                          size: 16,
-                          color: _primary,
-                        ),
-                        const SizedBox(width: 6),
-                        Text(
-                          '${section.emptySlots} kosong dari ${section.totalSlots} slot',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: _primary,
-                          ),
-                        ),
-                      ],
+                  const TextSpan(text: 'Denah Area Parkir\n'),
+                  TextSpan(
+                    text: widget.areaName,
+                    style: const TextStyle(color: AppColors.primary),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 22),
+
+            // Dropdown pilih bagian
+            const Text('Pilih bagian', style: AppTypography.label),
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(AppDimensions.radiusMd),
+                boxShadow: AppDimensions.softShadow,
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<int>(
+                  value: _selected,
+                  isExpanded: true,
+                  borderRadius: BorderRadius.circular(AppDimensions.radiusMd),
+                  dropdownColor: AppColors.surface,
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: AppColors.primary,
+                  ),
+                  style: AppTypography.body.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                  items: [
+                    for (var i = 0; i < _sections.length; i++)
+                      DropdownMenuItem(
+                        value: i,
+                        child: Text(_sections[i].name),
+                      ),
+                  ],
+                  onChanged: (v) {
+                    if (v != null) setState(() => _selected = v);
+                  },
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Ringkasan ketersediaan
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: AppColors.primarySoft,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.local_parking_rounded,
+                    size: 16,
+                    color: AppColors.primary,
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    '${section.emptySlots} kosong dari ${section.totalSlots} slot',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.primary,
                     ),
                   ),
                 ],
               ),
+            ),
 
-              const SizedBox(height: 14),
+            const SizedBox(height: 14),
 
-              // Denah
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 250),
-                child: _ParkingGrid(
-                  key: ValueKey(_selected),
-                  section: section,
-                ),
+            // Denah
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 250),
+              child: _ParkingGrid(key: ValueKey(_selected), section: section),
+            ),
+
+            const SizedBox(height: 22),
+
+            // Keterangan
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(AppDimensions.radiusLg),
+                boxShadow: AppDimensions.softShadow,
               ),
-
-              const SizedBox(height: 22),
-
-              // Keterangan
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(18),
-                  boxShadow: _softShadow,
-                ),
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Keterangan',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w800,
-                        color: _ink,
-                      ),
-                    ),
-                    SizedBox(height: 12),
-                    Row(
-                      children: [
-                        _LegendItem(filled: false, label: 'Kosong'),
-                        SizedBox(width: 28),
-                        _LegendItem(filled: true, label: 'Terisi'),
-                      ],
-                    ),
-                  ],
-                ),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Keterangan', style: AppTypography.subtitle),
+                  SizedBox(height: 12),
+                  Row(
+                    children: [
+                      _LegendItem(filled: false, label: 'Kosong'),
+                      SizedBox(width: 28),
+                      _LegendItem(filled: true, label: 'Terisi'),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
-const List<BoxShadow> _softShadow = [
-  BoxShadow(
-    color: Color(0x145142FF),
-    blurRadius: 18,
-    offset: Offset(0, 6),
-  ),
-];
-
-const Color _slotEmpty = Color(0xFFE4E1FF);
-const Color _slotFilled = Color(0xFF5142FF);
 
 class _ParkingGrid extends StatelessWidget {
   final _SectionLayout section;
@@ -323,9 +269,9 @@ class _ParkingGrid extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(12, 16, 16, 14),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: _softShadow,
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(AppDimensions.radiusXl),
+        boxShadow: AppDimensions.softShadow,
       ),
       child: Column(
         children: [
@@ -342,7 +288,7 @@ class _ParkingGrid extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w800,
-                        color: Color(0xFF19172E),
+                        color: AppColors.ink,
                       ),
                     ),
                   ),
@@ -375,7 +321,7 @@ class _ParkingGrid extends StatelessWidget {
             ),
 
           const SizedBox(height: 10),
-          Container(height: 1, color: const Color(0x1F5142FF)),
+          Container(height: 1, color: AppColors.primarySoft),
           const SizedBox(height: 12),
 
           // Baris B
@@ -398,7 +344,7 @@ class _ParkingGrid extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w800,
-                          color: Color(0xFF19172E),
+                          color: AppColors.ink,
                         ),
                       ),
                     ],
@@ -426,7 +372,7 @@ class _Slot extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: filled ? _slotFilled : _slotEmpty,
+        color: filled ? AppColors.slotFilled : AppColors.slotEmpty,
         borderRadius: BorderRadius.circular(5),
       ),
     );
@@ -448,18 +394,14 @@ class _LegendItem extends StatelessWidget {
           width: 32,
           height: 16,
           decoration: BoxDecoration(
-            color: filled ? _slotFilled : _slotEmpty,
+            color: filled ? AppColors.slotFilled : AppColors.slotEmpty,
             borderRadius: BorderRadius.circular(5),
           ),
         ),
         const SizedBox(width: 8),
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF19172E),
-          ),
+          style: AppTypography.body.copyWith(fontWeight: FontWeight.w600),
         ),
       ],
     );

@@ -1,100 +1,75 @@
 import 'package:flutter/material.dart';
-
 import 'app_colors.dart';
-import 'app_typography.dart';
 import 'app_dimensions.dart';
+import 'app_typography.dart';
 
 class AppTheme {
+  AppTheme._();
+
   static ThemeData get light {
+    final scheme = ColorScheme.fromSeed(
+      seedColor: AppColors.primary,
+      brightness: Brightness.light,
+    ).copyWith(
+      primary: AppColors.primary,
+      surface: AppColors.surface,
+    );
+
+    OutlineInputBorder border(Color color, [double width = 0]) {
+      return OutlineInputBorder(
+        borderRadius: BorderRadius.circular(AppDimensions.radiusMd),
+        borderSide: width == 0
+            ? BorderSide.none
+            : BorderSide(color: color, width: width),
+      );
+    }
+
     return ThemeData(
       useMaterial3: true,
-
-      //Base Color
-      scaffoldBackgroundColor: AppColors.grayLightest,
-
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.primary,
-        brightness: Brightness.light,
-      ).copyWith(
-        primary: AppColors.primary,
-        secondary: AppColors.complementaryYellow,
-        surface: AppColors.primaryAccent,
-      ),
-
-      //Tipografi global
-      textTheme: TextTheme(
-        headlineLarge: AppTypography.heading1,
-        headlineSmall: AppTypography.heading2,
-        bodyMedium: AppTypography.body,
-        bodySmall: AppTypography.caption,
-        labelSmall: AppTypography.label,
-      ),
-
-      // AppBar
-      appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.grayLightest,
-        foregroundColor: AppColors.grayDark,
-        elevation: 0,
-        centerTitle: false,
-        titleTextStyle: AppTypography.heading2.copyWith(
-          color: AppColors.grayDark,
+      colorScheme: scheme,
+      scaffoldBackgroundColor: AppColors.background,
+      splashFactory: InkRipple.splashFactory,
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: AppColors.surface,
+        hintStyle: const TextStyle(fontSize: 14, color: AppColors.muted),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
         ),
+        border: border(Colors.transparent),
+        enabledBorder: border(Colors.transparent),
+        focusedBorder: border(AppColors.primary, 1.5),
+        errorBorder: border(AppColors.danger, 1),
+        focusedErrorBorder: border(AppColors.danger, 1.5),
       ),
-      // Card
-      cardTheme: CardThemeData(
-        color: AppColors.grayLightest,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            AppDimensions.radius,
-          ),
-        ),
-      ),
-       // Tombol utama
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
-          textStyle: AppTypography.bodyBold,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppDimensions.space3,
-            vertical: AppDimensions.space2,
-          ),
+          elevation: 0,
+          minimumSize: const Size.fromHeight(AppDimensions.buttonHeight),
+          textStyle: AppTypography.button,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-              AppDimensions.radius,
-            ),
+            borderRadius: BorderRadius.circular(AppDimensions.radiusMd),
           ),
         ),
       ),
-      // Input: TextField
-      inputDecorationTheme: InputDecorationTheme(
-        filled: true,
-        fillColor: AppColors.grayLightest,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: AppDimensions.space2,
-          vertical: AppDimensions.space2,
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: AppColors.primary,
+          textStyle: const TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w700,
+          ),
         ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(
-            AppDimensions.radius,
-          ),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(
-            AppDimensions.radius,
-          ),
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(
-            AppDimensions.radius,
-          ),
-          borderSide: const BorderSide(
-            color: AppColors.primary,
-            width: 1.5,
-          ),
+      ),
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: AppColors.ink,
+        contentTextStyle: const TextStyle(color: Colors.white, fontSize: 13),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
         ),
       ),
     );

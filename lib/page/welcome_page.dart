@@ -1,5 +1,7 @@
-
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
+import '../theme/app_dimensions.dart';
+import '../theme/app_typography.dart';
 import '../widgets/auth_background.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -8,142 +10,96 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AuthBackground(
-      child: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(
+          AppDimensions.pagePadding,
+          AppDimensions.lg,
+          AppDimensions.pagePadding,
+          AppDimensions.xxl,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Logo
+            Image.asset(
+              'assets/images/LOGO SIP.png',
+              width: 120,
+              height: 52,
+              fit: BoxFit.contain,
+              alignment: Alignment.centerLeft,
+              errorBuilder: (_, __, ___) => const Text(
+                'SIP',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w900,
+                  color: AppColors.primary,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 32,
-                  ),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 65),
+              ),
+            ),
 
-                      // Judul welcome
-                      Text.rich(
-                        TextSpan(
-                          style: const TextStyle(
-                            fontSize: 27,
-                            fontWeight: FontWeight.w800,
-                            height: 1.15,
-                            color: Color(0xFF19172E),
-                          ),
-                          children: const [
-                            TextSpan(text: 'Selamat Datang\n'),
-                            TextSpan(text: 'di '),
-                            TextSpan(
-                              text: 'Aplikasi SIP',
-                              style: TextStyle(
-                                color: Color(0xFF5142FF),
-                              ),
-                            ),
-                          ],
-                        ),
-                        textAlign: TextAlign.center,
+            const Spacer(),
+
+            // Ilustrasi sederhana
+            Center(
+              child: Container(
+                width: 190,
+                height: 190,
+                decoration: BoxDecoration(
+                  color: AppColors.surface,
+                  borderRadius: BorderRadius.circular(48),
+                  boxShadow: AppDimensions.softShadow,
+                ),
+                child: Center(
+                  child: Container(
+                    width: 112,
+                    height: 112,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [AppColors.primary, AppColors.primaryLight],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-
-                      const SizedBox(height: 42),
-
-                      // Tombol Login
-                      _WelcomeButton(
-                        text: 'Login / Sign In',
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/login');
-                        },
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // Tombol Sign Up
-                      _WelcomeButton(
-                        text: 'Sign Up',
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/signup');
-                        },
-                      ),
-
-                      const SizedBox(height: 100),
-
-                      // Tombol Guest Mode
-                      OutlinedButton.icon(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/home');
-                        },
-                        icon: const Icon(
-                          Icons.account_circle_outlined,
-                          size: 17,
-                        ),
-                        label: const Text('Guest mode'),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: const Color(0xFF5142FF),
-                          backgroundColor: const Color(0xFFF0F0F0),
-                          side: const BorderSide(
-                            color: Color(0xFF5142FF),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 7,
-                          ),
-                          minimumSize: Size.zero,
-                          tapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                          shape: const StadiumBorder(),
-                        ),
-                      ),
-
-                      const SizedBox(height: 32),
-                    ],
+                      borderRadius: BorderRadius.circular(32),
+                    ),
+                    child: const Icon(
+                      Icons.local_parking_rounded,
+                      color: Colors.white,
+                      size: 64,
+                    ),
                   ),
                 ),
               ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
+            ),
 
-class _WelcomeButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
+            const Spacer(),
 
-  const _WelcomeButton({
-    required this.text,
-    required this.onPressed,
-  });
+            // Teks
+            Text.rich(
+              TextSpan(
+                style: AppTypography.display.copyWith(fontSize: 32),
+                children: const [
+                  TextSpan(text: 'Cari '),
+                  TextSpan(
+                    text: 'parkir',
+                    style: TextStyle(color: AppColors.primary),
+                  ),
+                  TextSpan(text: ' di UB\njadi lebih mudah.'),
+                ],
+              ),
+            ),
+            const SizedBox(height: AppDimensions.md),
+            const Text(
+              'Lihat denah dan ketersediaan slot parkir di area kampus secara langsung.',
+              style: AppTypography.bodyMuted,
+            ),
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 155,
-      height: 38,
-      child: OutlinedButton(
-        onPressed: onPressed,
-        style: OutlinedButton.styleFrom(
-          foregroundColor: const Color(0xFF392BFF),
-          backgroundColor: const Color(0xFFF0F0F0),
-          side: const BorderSide(
-            color: Color(0xFF5142FF),
-            width: 1.2,
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(6),
-          ),
-        ),
-        child: Text(
-          text,
-          style: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w700,
-          ),
+            const SizedBox(height: AppDimensions.xxl),
+
+            ElevatedButton(
+              onPressed: () => Navigator.pushNamed(context, '/login'),
+              child: const Text('Mulai'),
+            ),
+          ],
         ),
       ),
     );

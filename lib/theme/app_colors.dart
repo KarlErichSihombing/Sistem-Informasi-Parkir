@@ -1,42 +1,32 @@
 import 'package:flutter/material.dart';
 
-class AppColors{
-  //Complementary
-  static const Color primary = Color(0xFF6D66FF);
-  static const Color complementaryYellow = Color(0xFFFAFF66);
-  static const Color primaryAccent = Color(0xFFB0ADFF);
+class AppColors {
+  AppColors._();
 
-  //Blue Variation
-  static const Color blueLightest = Color(0xFFEEEEFF);
-  static const Color blueLight = Color(0xFFC3C1FF);
-  static const Color blueMediumLight = Color(0xFF9795FF);
-  static const Color bluePrimary = Color(0xFF6D66FF);
-  static const Color blueMediumDark = Color(0xFF382AFF);
-  static const Color blueDark = Color(0xFF1600BC);
-  static const Color blueDeep = Color(0xFF070065);
+  // Brand
+  static const Color primary = Color(0xFF5142FF);
+  static const Color primarySoft = Color(0x1F5142FF); // ungu transparan
+  static const Color primaryLight = Color(0xFF8B80FF);
 
-  //Yellor Variation
-  static const Color yellowPrimary = Color(0xFFFAFF66);
-  static const Color yellowLight = Color(0xFFD1D600);
-  static const Color yellowMEdiumLight = Color(0xFFAAAE00);
-  static const Color yellowDark = Color(0xFF848700);
-  static const Color yellowDeep = Color(0xFF606200);
-  static const Color yellowDeepest = Color(0xFF3E4000);
-  static const Color yellowVoid = Color(0xFF1F2000);
+  // Alias lama supaya file lain yang masih memanggil ini tidak error
+  static const Color primaryAccent = background;
 
-  //Purple Variation
-  static const Color purpleLight = Color(0xFFDBDAFF);
-  static const Color purplePrimary = Color(0xFF858DFF);
-  static const Color purpleMediumLight = Color(0xFF594DFF);
-  static const Color purpleDark = Color(0xFF2A00E0);
-  static const Color purpleDeep = Color(0xFF160091);
-  static const Color purpleVoid = Color(0xFF07004B);
+  // Surface
+  static const Color background = Color(0xFFF7F6FF);
+  static const Color surface = Colors.white;
 
-  //Neutral
-  static const Color grayLightest = Color(0xFFF0F0F0);
-  static const Color grayLight = Color(0xFFC7C7CA);
-  static const Color grayMediumLight = Color(0xFF7B7B82);
-  static const Color grayMedium = Color(0xFF585860);
-  static const Color grayDark = Color(0xFF37373D);
-  static const Color grayDeep = Color(0xFF19191D);
+  // Teks
+  static const Color ink = Color(0xFF19172E);
+  static const Color muted = Color(0xFF8A87A6);
+  static const Color hint = Color(0xFFBDB9E0);
+
+  // Status
+  static const Color danger = Color(0xFFE5484D);
+
+  // Denah parkir
+  static const Color slotEmpty = Color(0xFFE4E1FF);
+  static const Color slotFilled = primary;
+
+  // Bayangan
+  static const Color shadow = Color(0x145142FF);
 }

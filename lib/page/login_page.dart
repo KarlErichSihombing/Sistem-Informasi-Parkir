@@ -1,5 +1,7 @@
-
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
+import '../theme/app_dimensions.dart';
+import '../theme/app_typography.dart';
 import '../widgets/auth_background.dart';
 
 class LoginPage extends StatefulWidget {
@@ -10,346 +12,199 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController usernameController =
-      TextEditingController();
-
-  final TextEditingController passwordController =
-      TextEditingController();
-
-  bool hidePassword = true;
+  final _formKey = GlobalKey<FormState>();
+  final _idController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _obscure = true;
 
   @override
   void dispose() {
-    usernameController.dispose();
-    passwordController.dispose();
+    _idController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
-  void showMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+  void _submit() {
+    if (!_formKey.currentState!.validate()) return;
+    // TODO: sambungkan ke proses autentikasi
+    Navigator.pushReplacementNamed(context, '/home');
   }
 
   @override
   Widget build(BuildContext context) {
     return AuthBackground(
-      child: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 32,
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(
+          AppDimensions.pagePadding,
+          AppDimensions.md,
+          AppDimensions.pagePadding,
+          AppDimensions.xxl,
+        ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Tombol kembali
+              InkWell(
+                onTap: () => Navigator.maybePop(context),
+                customBorder: const CircleBorder(),
+                child: Container(
+                  width: 42,
+                  height: 42,
+                  decoration: BoxDecoration(
+                    color: AppColors.surface,
+                    shape: BoxShape.circle,
+                    boxShadow: AppDimensions.softShadow,
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 42),
-
-                      // Judul halaman
-                      Center(
-                        child: Text.rich(
-                          TextSpan(
-                            style: const TextStyle(
-                              fontSize: 29,
-                              fontWeight: FontWeight.w800,
-                              height: 1.15,
-                              color: Color(0xFF19172E),
-                            ),
-                            children: const [
-                              TextSpan(text: 'Masuk dengan\n'),
-                              TextSpan(
-                                text: 'akunmu',
-                                style: TextStyle(
-                                  color: Color(0xFF5142FF),
-                                ),
-                              ),
-                              TextSpan(text: '!'),
-                            ],
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-
-                      const SizedBox(height: 26),
-
-                      // Label username
-                      const Padding(
-                        padding: EdgeInsets.only(left: 8),
-                        child: Text(
-                          'Name/Username',
-                          style: TextStyle(
-                            color: Color(0xFF5142FF),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 4),
-
-                      // Input username
-                      TextField(
-                        controller: usernameController,
-                        decoration: InputDecoration(
-                          hintText: 'NIM135792',
-                          hintStyle: const TextStyle(
-                            color: Color(0xFFAAA6FF),
-                            fontSize: 12,
-                          ),
-                          prefixIcon: const Icon(
-                            Icons.account_circle_outlined,
-                            color: Color(0xFF5142FF),
-                            size: 19,
-                          ),
-                          filled: true,
-                          fillColor: const Color(0xFFF0F0F0),
-                          contentPadding:
-                              const EdgeInsets.symmetric(vertical: 14),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(7),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 26),
-
-                      // Label password
-                      const Padding(
-                        padding: EdgeInsets.only(left: 8),
-                        child: Text(
-                          'Password',
-                          style: TextStyle(
-                            color: Color(0xFF5142FF),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 4),
-
-                      // Input password
-                      TextField(
-                        controller: passwordController,
-                        obscureText: hidePassword,
-                        decoration: InputDecoration(
-                          hintText: '123Password',
-                          hintStyle: const TextStyle(
-                            color: Color(0xFFAAA6FF),
-                            fontSize: 12,
-                          ),
-                          prefixIcon: const Icon(
-                            Icons.lock_outline,
-                            color: Color(0xFF5142FF),
-                            size: 19,
-                          ),
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                hidePassword = !hidePassword;
-                              });
-                            },
-                            icon: Icon(
-                              hidePassword
-                                  ? Icons.visibility_off_outlined
-                                  : Icons.visibility_outlined,
-                              size: 18,
-                              color: const Color(0xFF5142FF),
-                            ),
-                          ),
-                          filled: true,
-                          fillColor: const Color(0xFFF0F0F0),
-                          contentPadding:
-                              const EdgeInsets.symmetric(vertical: 14),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(7),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 25),
-
-                      // Tombol Login
-                      SizedBox(
-                        width: double.infinity,
-                        height: 36,
-                        child: OutlinedButton(
-                          
-                          onPressed: () {
-                            if (usernameController.text.trim().isEmpty ||
-                                passwordController.text.isEmpty) {
-                              showMessage(
-                                'Masukkan username dan password terlebih dahulu.',
-                              );
-                              return;
-                            }
-
-                            Navigator.pushReplacementNamed(context, '/home');
-                          },
-
-                          style: OutlinedButton.styleFrom(
-                            backgroundColor: const Color(0xFFF0F0F0),
-                            foregroundColor: const Color(0xFF392BFF),
-                            side: const BorderSide(
-                              color: Color(0xFF5142FF),
-                              width: 1.3,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                          ),
-                          child: const Text(
-                            'Login',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 40),
-
-                      // Login alternatif
-                      const Padding(
-                        padding: EdgeInsets.only(left: 8),
-                        child: Text(
-                          'Or sign in with:',
-                          style: TextStyle(
-                            color: Color(0xFF5142FF),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _SocialButton(
-                              icon: Icons.g_mobiledata,
-                              text: 'Google',
-                              onPressed: () {
-                                showMessage(
-                                  'Login Google belum dihubungkan.',
-                                );
-                              },
-                            ),
-                          ),
-                          const SizedBox(width: 18),
-                          Expanded(
-                            child: _SocialButton(
-                              icon: Icons.code,
-                              text: 'GitHub',
-                              onPressed: () {
-                                showMessage(
-                                  'Login GitHub belum dihubungkan.',
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 105),
-
-                      // Lupa password
-                      Center(
-                        child: Wrap(
-                          alignment: WrapAlignment.center,
-                          children: [
-                            const Text(
-                              'Forgot password? ',
-                              style: TextStyle(
-                                color: Color(0xFF19172E),
-                                fontSize: 14,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                showMessage(
-                                  'Fitur reset password belum dibuat.',
-                                );
-                              },
-                              child: const Text(
-                                'Click here',
-                                style: TextStyle(
-                                  color: Color(0xFF5142FF),
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 32),
-                    ],
+                  child: const Icon(
+                    Icons.arrow_back_rounded,
+                    size: 20,
+                    color: AppColors.ink,
                   ),
                 ),
               ),
-            );
-          },
+
+              const SizedBox(height: AppDimensions.huge),
+
+              Text.rich(
+                TextSpan(
+                  style: AppTypography.display.copyWith(fontSize: 32),
+                  children: const [
+                    TextSpan(text: 'Selamat datang\n'),
+                    TextSpan(
+                      text: 'kembali',
+                      style: TextStyle(color: AppColors.primary),
+                    ),
+                    TextSpan(text: ' 👋'),
+                  ],
+                ),
+              ),
+              const SizedBox(height: AppDimensions.sm),
+              const Text(
+                'Masuk untuk mulai mencari area parkir.',
+                style: AppTypography.bodyMuted,
+              ),
+
+              const SizedBox(height: AppDimensions.huge),
+
+              // NIM / Email
+              const Text('NIM atau email', style: AppTypography.label),
+              const SizedBox(height: AppDimensions.sm),
+              _ShadowField(
+                child: TextFormField(
+                  controller: _idController,
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    hintText: 'Masukkan NIM atau email',
+                    prefixIcon: Icon(
+                      Icons.person_outline_rounded,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                  validator: (v) => (v == null || v.trim().isEmpty)
+                      ? 'NIM atau email wajib diisi'
+                      : null,
+                ),
+              ),
+
+              const SizedBox(height: AppDimensions.lg),
+
+              // Password
+              const Text('Kata sandi', style: AppTypography.label),
+              const SizedBox(height: AppDimensions.sm),
+              _ShadowField(
+                child: TextFormField(
+                  controller: _passwordController,
+                  obscureText: _obscure,
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (_) => _submit(),
+                  decoration: InputDecoration(
+                    hintText: 'Masukkan kata sandi',
+                    prefixIcon: const Icon(
+                      Icons.lock_outline_rounded,
+                      color: AppColors.primary,
+                    ),
+                    suffixIcon: IconButton(
+                      onPressed: () => setState(() => _obscure = !_obscure),
+                      icon: Icon(
+                        _obscure
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                        color: AppColors.muted,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                  validator: (v) => (v == null || v.length < 6)
+                      ? 'Minimal 6 karakter'
+                      : null,
+                ),
+              ),
+
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Fitur lupa kata sandi belum tersedia'),
+                      ),
+                    );
+                  },
+                  child: const Text('Lupa kata sandi?'),
+                ),
+              ),
+
+              const SizedBox(height: AppDimensions.md),
+
+              ElevatedButton(
+                onPressed: _submit,
+                child: const Text('Masuk'),
+              ),
+
+              const SizedBox(height: AppDimensions.xl),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Belum punya akun?', style: AppTypography.caption),
+                  TextButton(
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Halaman daftar belum tersedia'),
+                        ),
+                      );
+                    },
+                    child: const Text('Daftar'),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class _SocialButton extends StatelessWidget {
-  final IconData icon;
-  final String text;
-  final VoidCallback onPressed;
+/// Membungkus field dengan bayangan halus.
+class _ShadowField extends StatelessWidget {
+  final Widget child;
 
-  const _SocialButton({
-    required this.icon,
-    required this.text,
-    required this.onPressed,
-  });
+  const _ShadowField({required this.child});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 36,
-      child: OutlinedButton(
-        onPressed: onPressed,
-        style: OutlinedButton.styleFrom(
-          backgroundColor: const Color(0xFFF0F0F0),
-          foregroundColor: const Color(0xFF392BFF),
-          side: const BorderSide(
-            color: Color(0xFF5142FF),
-            width: 1.1,
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 6),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(6),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 19),
-            const SizedBox(width: 5),
-            Flexible(
-              child: Text(
-                text,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 12),
-              ),
-            ),
-          ],
-        ),
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppDimensions.radiusMd),
+        boxShadow: AppDimensions.softShadow,
       ),
+      child: child,
     );
   }
 }
